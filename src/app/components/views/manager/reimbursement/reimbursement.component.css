@@ -1,0 +1,12 @@
+textarea {
+    resize: none;
+}
+
+#loading {
+    margin: 8% auto;
+    border: none;
+}
+
+#loading a {
+    font-size: 10vh;
+}

@@ -1,4 +1,11 @@
+
 import { Component } from '@angular/core';
+import { User } from './models/User';
+
+export interface UserToken {
+  auth_token: string;
+  user: User;
+}
 
 @Component({
   selector: 'app-root',
@@ -6,5 +13,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'expenditure-v3';
+  title = 'app';
 }

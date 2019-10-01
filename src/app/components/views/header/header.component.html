@@ -1,0 +1,23 @@
+<div class="container">
+  <nav class="tabs is-right">
+      <ul>
+          <li class="is-active"><a>Home</a></li>
+          <li><a>Profile</a></li>
+          <li><a (click)="signout()">Signout</a></li>
+      </ul>
+  </nav>
+</div>
+<div class="hero is-light">
+  <div class="hero-body">
+      <div class="container">
+          <section>
+              <h1 class="title">
+                  Welcome {{loginService.getUser().firstName}}!
+              </h1>
+              <h2 class="subtitle">
+                  ID# {{loginService.getUser().id}}
+              </h2>
+          </section>
+      </div>
+  </div>
+</div>

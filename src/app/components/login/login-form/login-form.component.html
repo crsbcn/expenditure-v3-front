@@ -1,0 +1,37 @@
+<form>
+  <div class="field">
+    <div class="control has-icons-left">
+      <input [(ngModel)]="username" id="login_username" class="input is-medium" type="text" placeholder="Username" autofocus="" name="username">
+      <span class="icon is-small is-left">
+          <i class="fas fa-user"></i>
+            
+        </span>
+    </div>
+  </div>
+  <div class="field">
+    <div class="control has-icons-left">
+      <input [(ngModel)]="password" id="login_password" class="input is-medium" type="password" placeholder="Password" name="password">
+      <span class="icon is-small is-left">
+            <i class="fas fa-unlock"></i>
+        </span>
+    </div>
+  </div>
+  <div class="field">
+    <label class="checkbox">
+      <input type="checkbox"> Remember me
+    </label>
+  </div>
+  <button class="button is-info is-light is-medium is-fullwidth" (click)="login()">
+    Login
+  </button>
+</form>
+<div class="modal is-active" *ngIf="loginService.modalActive">
+  <div class="modal-background" (click)="closeModal()"></div>
+  <div class="modal-content">
+    <div class="notification is-danger">
+        <p>Invalid Login</p>
+    </div>
+  </div>
+  <button class="modal-close is-large" aria-label="close" (click)="closeModal()"></button>
+</div>
+

@@ -1,0 +1,114 @@
+<div class="field is-horizontal">
+  <div class="field-body">
+    <div class="field">
+      <a class="button is-medium" (click)="refresh()">
+        <span>Refresh</span>
+        <span class="icon is-small"><i class="fas fa-sync-alt"></i></span>
+      </a>
+    </div>
+    <div class="control field is-grouped is-grouped-right" (changed)="statusChange()">
+      <label class="radio">
+        <input type="radio" name="status" checked (click)="statusChange($event)" value="0"> Pending
+      </label>
+      <label class="radio">
+        <input type="radio" name="status" (click)="statusChange($event)" value="1"> Approved
+      </label>
+      <label class="radio">
+          <input type="radio" name="status"  (click)="statusChange($event)" value="2"> Denied
+        </label>
+        <label class="radio">
+          <input type="radio" name="status" (click)="statusChange($event)" value="-1"> All
+        </label>
+    </div>
+  </div>
+</div>
+<section class="container" *ngIf="!manReimbService.listLoaded">
+  <div id="loading" class="has-text-centered"><a class="button is-large is-loading is-white">loading</a></div>
+</section>
+<section class="container" *ngIf="manReimbService.listLoaded">
+    <table class="table is-fullwidth is-hoverable">
+        <thead>
+            <tr>
+                <th>Id#</th>
+                <th>Employee Id#</th>
+                <th>Amount</th>
+                <th>Description</th>
+                <th>Receipt</th>
+                <th>Date Requested</th>
+                <th *ngIf="allColumnActive">Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody *ngFor="let reimb of manReimbService.reimbList">
+          <tr>
+            <th>{{reimb.id}}</th>
+            <th>{{reimb.author | employee}}</th>
+            <th>{{reimb.amount | currency}}</th>
+            <th>{{reimb.description}}</th>
+            <th>{{reimb.receipt}}</th>
+            <th>{{reimb.submitted | date}}</th>
+            <!-- <th *ngIf="allColumnActive">{{reimb.resolved | date}}</th> -->
+            <th *ngIf="allColumnActive" appStatuscolor>{{reimb.status | status}}</th>
+            <th>
+              <a class="button is-link" (click)="viewReimbursement(reimb)">View</a>
+            </th>
+          </tr>
+        </tbody>
+    </table>
+</section>
+
+<div class="modal is-active" *ngIf="reimbModalActive">
+  <div class="modal-background" (click)="closeModal()"></div>
+  <div class="modal-content">
+    <div class="box">
+        <h1 class="is-size-3">Request Information</h1>
+        <h2 class="subtitle">Status: {{reimb.status | status}}</h2>
+        <hr>
+        <h4 class="is-size-6">
+          <span class="has-text-weight-light has-text-left">Employee Name: </span>
+          <span class="has-text-weight-semibold has-text-centered">{{user.firstName}} {{user.lastName}}</span>
+        </h4>
+        <h4 class="is-size-6">
+          <span class="has-text-weight-light has-text-left">Employee Id: </span>
+          <span class="has-text-weight-semibold has-text-centered">{{user.id}}</span>
+        </h4>
+        <h4 class="is-size-6">
+          <span class="has-text-weight-light has-text-left">Employee Email: </span>
+          <span class="has-text-weight-semibold has-text-centered">{{user.email}}</span>
+        </h4>
+        <hr>
+        <h4 class="is-size-6">
+          <span class="has-text-weight-light has-text-left">Reimbursement Id: </span>
+          <span class="has-text-weight-semibold has-text-centered">{{reimb.id}}</span>
+        </h4>
+        <h4 class="is-size-6">
+          <span class="has-text-weight-light has-text-left">Reimbursement Amount: </span>
+          <span class="has-text-weight-semibold has-text-centered">{{reimb.amount | currency}}</span>
+        </h4>
+        <h4 class="is-size-6">
+          <span class="has-text-weight-light has-text-left">Reimbursement Type: </span>
+          <span class="has-text-weight-semibold has-text-centered">{{reimb.type | type}}</span>
+        </h4>
+        <h4 class="is-size-6">
+          <span class="has-text-weight-light has-text-left">Reimbursement Description: </span>
+        </h4>
+        <textarea class="textarea" rows="5" readonly>{{reimb.description}}</textarea>
+        <h4 class="is-size-6">
+          <span class="has-text-weight-light has-text-left">Reimbursement Receipt: </span>
+          <span class="has-text-weight-semibold has-text-centered"><a>{{reimb.receipt}}</a></span>
+        </h4>
+      <hr>
+      <div class="control field is-grouped is-grouped-right" *ngIf="reimbNotResolved()">
+        <p class="buttons">
+          <button class="button is-success" (click)="approveReimbursement()">
+            <span class="icon is-small"><i class="fas fa-check-circle"></i></span>
+            <span> Approve</span></button>
+          <button class="button is-danger" (click)="denyReimbursement()">
+            <span class="icon is-small"><i class="fas fa-times-circle"></i></span>
+            <span> Deny</span></button>
+        </p>
+      </div>
+    </div>
+  </div>
+  <button class="modal-close is-large" aria-label="close" (click)="closeModal()"></button>
+</div>

@@ -1,0 +1,12 @@
+#options {
+    margin-top: 1%;
+}
+
+#loading {
+    margin: 10% auto;
+    border: none;
+}
+
+#loading a {
+    font-size: 10vh;
+}

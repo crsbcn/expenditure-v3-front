@@ -1,0 +1,5 @@
+<app-header></app-header>
+<div [ngSwitch]="switchRole()">
+    <app-manager *ngSwitchCase="1"></app-manager>
+    <app-employee *ngSwitchCase="0"></app-employee>
+</div>
